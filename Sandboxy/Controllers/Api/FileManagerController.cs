@@ -40,7 +40,7 @@ namespace Sandboxy.Controllers.Api
 			File file = await _fileManager.GetFile(fileID);
 			if (file == null)
 			{
-				return NoContent();
+				return NotFound();
 			}
 			else
 			{
