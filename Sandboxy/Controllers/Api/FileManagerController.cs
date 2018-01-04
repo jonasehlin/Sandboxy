@@ -16,7 +16,7 @@ namespace Sandboxy.Controllers.Api
 
 		public FileManagerController()
 		{
-			_db = new SqlConnection("Data Source=(local);Initial Catalog=MK_DbTests;Integrated Security=True");
+			_db = new SqlConnection("Data Source=10.140.4.10;Initial Catalog=MK_DbTests;Integrated Security=True");
 			_fileManager = new FileManager(_db)
 			{
 				MaxClientFileCount = 10

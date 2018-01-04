@@ -16,49 +16,17 @@ function uploadFiles() {
 		var apiFile = new ApiFile();
 		apiFile.Name = file.name;
 		apiFile.Created = new Date();
-		apiFile.Content = reader.result;
+		apiFile.Content = null;//reader.result;
 		apiFile.ContentType = file.type;
-
-		/*var xhr = new XMLHttpRequest();
-		xhr.open("POST", 'http://localhost:53664/api/Files/Add', true);
-
-		//Send the proper header information along with the request
-		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-		//Call a function when the state changes.
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState == XMLHttpRequest.DONE) {
-				// Request finished. Do processing here.
-				if (xhr.status == 200) {
-					alert('DOne');
-				}
-			}
-		}
-
-		xhr.send(apiFile);*/
-
-		/*
-		$.ajax({
-			url: 'http://localhost:53664/api/Files/Add',
-			type: 'POST',
-			data: apiFile,
-			success: function (msg) {
-				alert('Sent success!');
-			},
-			error: function () {
-				alert('Error');
-			}
-		});*/
-		//var jsonData = JSON.stringify(apiFile);
+		apiFile.ClientID = 4;
+		
 		$.ajax({
 			headers: {
-				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			},
-			type: 'POST',
 			url: 'http://localhost:53664/api/Files/Add',
-			data: apiFile,
-			dataType: 'json',
+			type: 'POST',
+			data: JSON.stringify(apiFile),
 			success: function (msg) {
 				alert('Sent success!');
 			},
@@ -66,9 +34,8 @@ function uploadFiles() {
 				alert('Error');
 			}
 		});
-
 	};
-	reader.readAsDataURL(file);
+	reader.readAsArrayBuffer(file);
 	
 	// Prevent reload
 	return false;

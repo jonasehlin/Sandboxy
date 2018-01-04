@@ -10,17 +10,16 @@ function uploadFiles() {
         var apiFile = new ApiFile();
         apiFile.Name = file.name;
         apiFile.Created = new Date();
-        apiFile.Content = reader.result;
+        apiFile.Content = null;
         apiFile.ContentType = file.type;
+        apiFile.ClientID = 4;
         $.ajax({
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            type: 'POST',
             url: 'http://localhost:53664/api/Files/Add',
-            data: apiFile,
-            dataType: 'json',
+            type: 'POST',
+            data: JSON.stringify(apiFile),
             success: function (msg) {
                 alert('Sent success!');
             },
@@ -29,7 +28,7 @@ function uploadFiles() {
             }
         });
     };
-    reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
     return false;
 }
 //# sourceMappingURL=site.js.map
