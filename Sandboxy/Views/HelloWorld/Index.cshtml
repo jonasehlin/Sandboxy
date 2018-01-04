@@ -6,8 +6,28 @@
 
 <p>Hello from our View Template!</p>
 
+<table id="filesTable">
+	<thead>
+		<tr>
+			<th>Filnamn</th>
+			<th style="text-align: right">Storlek</th>
+			<th>Uppladdad</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+
 <form method="post" enctype="multipart/form-data" onsubmit="return FileManager.uploadFiles();">
 	<p>Upload one or more files using this form:</p>
 	<input type="file" name="theFile" id="fileId" />
 	<input type="submit" name="Ladda upp" value="UploadFile" />
 </form>
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			FileManager.populateTable();
+		});
+	</script>
+}
