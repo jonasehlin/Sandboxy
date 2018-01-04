@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sandboxy.Models;
+using Sandboxy.Properties;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,7 +17,7 @@ namespace Sandboxy.Controllers.Api
 
 		public FileManagerController()
 		{
-			_db = new SqlConnection("Data Source=10.140.4.10;Initial Catalog=MK_DbTests;Integrated Security=True");
+			_db = new SqlConnection(Settings.Default.ConnectionString);
 			_fileManager = new FileManager(_db)
 			{
 				MaxClientFileCount = 10

@@ -260,5 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 
-#TypeScript
+# TypeScript
 *.js.map
+
+# Misc files
+/Sandboxy/Properties/Settings.xml
