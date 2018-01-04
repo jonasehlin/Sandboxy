@@ -26,6 +26,22 @@ module FileManager {
 	export function uploadFiles() {
 		var file = (<HTMLInputElement>document.getElementById("fileId")).files[0];
 		var reader = new FileReader();
+		reader.onloadstart = function (ev: Event) {
+			console.log(ev.type);
+		};
+		reader.onprogress = function (ev: ProgressEvent) {
+			console.log(ev.type);
+			if (ev.lengthComputable) {
+				console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
+			}
+		};
+		reader.onloadend = function (ev: ProgressEvent) {
+			console.log(ev.type);
+			if (ev.lengthComputable) {
+				console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
+			}
+		};
+
 		reader.onload = function () {
 			var apiFile = new ApiFile();
 			apiFile.Name = file.name;
@@ -34,7 +50,31 @@ module FileManager {
 			apiFile.ContentType = file.type;
 			apiFile.ClientID = ClientID;
 
+			var xxhr: XMLHttpRequest;
+			if ((<any>window).XMLHttpRequest) {
+				xxhr = new XMLHttpRequest();
+			} else {
+				xxhr = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
 			$.ajax({
+				xhr: function () {
+					xxhr.upload.addEventListener("progress", function (ev: ProgressEvent) {
+						console.log(ev.type);
+						if (ev.lengthComputable) {
+							console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
+						}
+					}, false);
+
+					xxhr.addEventListener("progress", function (ev: ProgressEvent) {
+						console.log(ev.type);
+						if (ev.lengthComputable) {
+							console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
+						}
+					}, false);
+
+					return xxhr;
+				},
 				headers: {
 					'Content-Type': 'application/json'
 				},
