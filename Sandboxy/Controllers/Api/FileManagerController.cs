@@ -35,7 +35,7 @@ namespace Sandboxy.Controllers.Api
 		}
 
 		[HttpGet("{fileID}")]
-		public async Task<ActionResult> GetFile(int fileID)
+		public async Task<IActionResult> GetFile(int fileID)
 		{
 			File file = await _fileManager.GetFile(fileID);
 			if (file == null)
