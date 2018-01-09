@@ -37,28 +37,28 @@ var FileManager;
             apiFile.Content = reader.result.toString().split(',')[1];
             apiFile.ContentType = file.type;
             apiFile.ClientID = ClientID;
-            var xxhr;
-            if (window.XMLHttpRequest) {
-                xxhr = new XMLHttpRequest();
-            }
-            else {
-                xxhr = new ActiveXObject("Microsoft.XMLHTTP");
-            }
             $.ajax({
                 xhr: function () {
-                    xxhr.upload.addEventListener("progress", function (ev) {
+                    var xhr;
+                    if (window.XMLHttpRequest) {
+                        xhr = new XMLHttpRequest();
+                    }
+                    else {
+                        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xhr.upload.addEventListener("progress", function (ev) {
                         console.log(ev.type);
                         if (ev.lengthComputable) {
                             console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
                         }
                     }, false);
-                    xxhr.addEventListener("progress", function (ev) {
+                    xhr.addEventListener("progress", function (ev) {
                         console.log(ev.type);
                         if (ev.lengthComputable) {
                             console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
                         }
                     }, false);
-                    return xxhr;
+                    return xhr;
                 },
                 headers: {
                     'Content-Type': 'application/json'
@@ -111,7 +111,7 @@ var FileManager;
         row.insertCell(0).appendChild(document.createTextNode('Total filstorlek:'));
         var totalSizeCell = row.insertCell(1);
         totalSizeCell.style.textAlign = 'right';
-        totalSizeCell.appendChild(document.createTextNode('' + Math.ceil(totalFileSize / 1024.0 + 0.5).toString() + ' kB'));
+        totalSizeCell.appendChild(document.createTextNode('' + Math.ceil(totalFileSize / 1024.0).toString() + ' kB'));
         row.insertCell(2);
         row.insertCell(3);
     }

@@ -50,30 +50,30 @@ module FileManager {
 			apiFile.ContentType = file.type;
 			apiFile.ClientID = ClientID;
 
-			var xxhr: XMLHttpRequest;
-			if ((<any>window).XMLHttpRequest) {
-				xxhr = new XMLHttpRequest();
-			} else {
-				xxhr = new ActiveXObject("Microsoft.XMLHTTP");
-			}
-
 			$.ajax({
 				xhr: function () {
-					xxhr.upload.addEventListener("progress", function (ev: ProgressEvent) {
+					var xhr: XMLHttpRequest;
+					if ((<any>window).XMLHttpRequest) {
+						xhr = new XMLHttpRequest();
+					} else {
+						xhr = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+
+					xhr.upload.addEventListener("progress", function (ev: ProgressEvent) {
 						console.log(ev.type);
 						if (ev.lengthComputable) {
 							console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
 						}
 					}, false);
 
-					xxhr.addEventListener("progress", function (ev: ProgressEvent) {
+					xhr.addEventListener("progress", function (ev: ProgressEvent) {
 						console.log(ev.type);
 						if (ev.lengthComputable) {
 							console.log('loaded = ' + ev.loaded + ', total = ' + ev.total);
 						}
 					}, false);
 
-					return xxhr;
+					return xhr;
 				},
 				headers: {
 					'Content-Type': 'application/json'
@@ -137,7 +137,7 @@ module FileManager {
 		row.insertCell(0).appendChild(document.createTextNode('Total filstorlek:'));
 		var totalSizeCell = row.insertCell(1);
 		totalSizeCell.style.textAlign = 'right';
-		totalSizeCell.appendChild(document.createTextNode('' + (<number>Math.ceil(totalFileSize / 1024.0 + 0.5)).toString() + ' kB'));
+		totalSizeCell.appendChild(document.createTextNode('' + (<number>Math.ceil(totalFileSize / 1024.0)).toString() + ' kB'));
 		row.insertCell(2);
 		row.insertCell(3);
 	}
