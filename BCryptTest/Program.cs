@@ -11,6 +11,13 @@ namespace BCryptTest
 	{
 		static void Main(string[] args)
 		{
+			string valueStr = "Apanson ar ett miffo";
+
+			using (var bcrypt = new BCrypt(BCryptDll.BCRYPT_SHA256_ALGORITHM))
+			{
+				var hash = bcrypt.Hash(valueStr);
+			}
+
 			int status = BCryptDll.BCryptOpenAlgorithmProvider(
 				out IntPtr hAlgorithm,
 				BCryptDll.BCRYPT_SHA256_ALGORITHM,
@@ -26,7 +33,6 @@ namespace BCryptTest
 				0
 			);
 
-			string valueStr = "Apanson ar ett miffo";
 			var value = Encoding.UTF8.GetBytes(valueStr);
 			byte[] output = new byte[buffer[0]];
 			status = BCryptDll.BCryptHash(
