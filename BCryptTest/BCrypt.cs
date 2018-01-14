@@ -9,7 +9,7 @@ namespace Windows
 	/// <remarks>
 	/// https://msdn.microsoft.com/en-us/library/windows/desktop/mt633798%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
 	/// </remarks>
-	public static class BCrypt
+	public static class BCryptDll
     {
 		#region Common algorithm identifiers
 
