@@ -72,6 +72,15 @@ namespace Windows
 			return Hash(input, null);
 		}
 
+		public static byte[] GenerateRandomNumber(int length)
+		{
+			var buffer = new byte[length];
+			int status = BCryptDll.BCryptGenRandom(IntPtr.Zero, buffer, BCryptDll.BCRYPT_USE_SYSTEM_PREFERRED_RNG);
+			if (status != 0)
+				throw new Exception($"Error: Status = {status}");
+			return buffer;
+		}
+
 		public void Close()
 		{
 			if (_hAlgorithm == IntPtr.Zero)

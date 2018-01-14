@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Windows;
 
 namespace BCryptTest
@@ -16,6 +13,7 @@ namespace BCryptTest
 			using (var bcrypt = new BCrypt(BCryptDll.BCRYPT_SHA256_ALGORITHM))
 			{
 				var hash = bcrypt.Hash(valueStr);
+				var random = BCrypt.GenerateRandomNumber(16);
 			}
 
 			int status = BCryptDll.BCryptOpenAlgorithmProvider(

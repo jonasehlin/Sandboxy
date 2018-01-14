@@ -125,5 +125,29 @@ namespace Windows
 		/// </remarks>
 		[DllImport("Bcrypt.dll")]
 		public static extern int BCryptCloseAlgorithmProvider(IntPtr hAlgorithm, uint dwFlags);
+
+		#region Primitive random number generation.
+
+		// Flags to BCryptGenRandom
+		// BCRYPT_RNG_USE_ENTROPY_IN_BUFFER is ignored in Win7 & later
+		public const uint BCRYPT_RNG_USE_ENTROPY_IN_BUFFER = 0x00000001;
+		public const uint BCRYPT_USE_SYSTEM_PREFERRED_RNG = 0x00000002;
+
+		#endregion
+
+
+		/// <summary>
+		/// The BCryptGenRandom function generates a random number.
+		/// </summary>
+		/// <remarks>
+		/// https://msdn.microsoft.com/en-us/library/aa375458%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396
+		/// </remarks>
+		[DllImport("Bcrypt.dll")]
+		static extern int BCryptGenRandom(IntPtr hAlgorithm, byte[] pbBuffer, uint cbBuffer, uint dwFlags);
+
+		public static int BCryptGenRandom(IntPtr hAlgorithm, byte[] pbBuffer, uint dwFlags)
+		{
+			return BCryptGenRandom(hAlgorithm, pbBuffer, (uint)pbBuffer.Length, dwFlags);
+		}
 	}
 }
